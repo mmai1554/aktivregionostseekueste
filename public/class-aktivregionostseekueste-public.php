@@ -27,7 +27,7 @@ class Aktivregionostseekueste_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
 
@@ -36,21 +36,22 @@ class Aktivregionostseekueste_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
+	 * @param string $plugin_name The name of the plugin.
+	 * @param string $version The version of this plugin.
+	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -102,13 +103,27 @@ class Aktivregionostseekueste_Public {
 
 	public function register_shortcode_mi_pdf() {
 		// show list of PDF
-		add_shortcode( 'mi_pdf', function () {
-			$template = '<div class="mi-downloads"><h3>Downloads<span class="uabb-icon"><i class="fi-download"></i></span></h3><div>%s</div></div>';
-			$mi_li = '<li><a href="%s" target="_self">%s (%s)</a></li>';
-			if(!have_rows( 'pdf-liste' )) {
+		add_shortcode( 'mi_pdf', function ( $params ) {
+
+			// init:
+			$a     = shortcode_atts( array(
+				'title' => 'Downloads'
+			), $params );
+			$title = $a['title'];
+
+			// go:
+			$render_template = function ( $title, $content ) {
+				return
+					sprintf( '<div class="mi-downloads"><h3>%s<span class="uabb-icon"><i class="fi-download"></i></span></h3><div>%s</div></div>',
+						$title,
+						$content
+					);
+			};
+			$mi_li           = '<li><a href="%s" target="_self">%s (%s)</a></li>';
+			if ( ! have_rows( 'pdf-liste' ) ) {
 				return '';
 			}
-			$html = [];
+			$html   = [];
 			$html[] = '<ul>';
 			while ( have_rows( 'pdf-liste' ) ) {
 				the_row();
@@ -120,18 +135,18 @@ class Aktivregionostseekueste_Public {
 					$title = $url;
 				}
 				$filesize = filesize( get_attached_file( $id ) );
-				$filesize = size_format($filesize, 2);
-				$render     = sprintf(
+				$filesize = size_format( $filesize, 2 );
+				$render   = sprintf(
 					$mi_li,
 					$url,
 					$title,
 					$filesize
 				);
-				$html[] =  $render;
+				$html[]   = $render;
 			}
 			$html[] = '</ul>';
-			$list =  implode("\n", $html);
-			return sprintf($template, $list);
+			$list   = implode( "\n", $html );
+			return $render_template($title, $list);
 		} );
 	}
 
