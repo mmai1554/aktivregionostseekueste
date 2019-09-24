@@ -146,8 +146,76 @@ class Aktivregionostseekueste_Public {
 			}
 			$html[] = '</ul>';
 			$list   = implode( "\n", $html );
-			return $render_template($title, $list);
+
+			return $render_template( $title, $list );
 		} );
+
+		add_shortcode( 'mnc_doclist', function ( $params ) {
+
+			// init:
+			$a     = shortcode_atts( array(
+				'title' => 'Dokumente:',
+				'cat'   => false,
+			), $params );
+			$title = $a['title'];
+			$cat   = $a['cat'];
+			$list = '';
+
+			// go:
+			$render_template = function ( $title, $content ) {
+				return
+					sprintf( '<div class="mi-downloads"><h3>%s<span class="uabb-icon"><i class="fi-download"></i></span></h3><div>%s</div></div>',
+						$title,
+						$content
+					);
+			};
+			$mi_li           = '<li><a href="%s" target="_self">%s (%s)</a></li>';
+
+			$args = [
+				'post_type'   => 'attachment',
+				'post_status' => 'inherit',
+			];
+			if ( $cat ) {
+				$cat               = explode( ",", $cat );
+				$args['tax_query'] = [
+					[
+						'taxonomy' => 'media_category',
+						'field'    => 'slug',
+						'terms'    => $cat // term slug
+					]
+				];
+			}
+
+			//
+			$query = new WP_Query( $args );
+
+			if ( $query->have_posts() ) {
+
+				$html   = [];
+				$html[] = '<ul>';
+
+				while ( $query->have_posts() ) {
+					$query->the_post();
+					$url      = wp_get_attachment_url( $query->post->ID );
+					$filename = get_the_title();
+					$filesize = filesize( get_attached_file( $query->post->ID ) );
+					$filesize = size_format( $filesize, 2 );
+					$render   = sprintf(
+						$mi_li,
+						$url,
+						$filename,
+						$filesize
+					);
+					$html[]   = $render;
+				}
+				wp_reset_postdata();
+				$html[] = '</ul>';
+				$list   = implode( "\n", $html );
+			}
+			return $render_template( $title, $list );
+		} );
+
+
 	}
 
 }

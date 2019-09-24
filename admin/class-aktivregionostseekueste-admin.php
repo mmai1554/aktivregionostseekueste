@@ -254,7 +254,7 @@ class Aktivregionostseekueste_Admin {
 			'filter_items_list'     => __( 'Filter items list', $text_domain ),
 		);
 		$rewrite     = array(
-			'slug'       => 'projekte',
+			'slug'       => 'aktivregion-ostseekueste-projekte',
 			'with_front' => true,
 			'pages'      => true,
 			'feeds'      => true,
@@ -377,9 +377,9 @@ class Aktivregionostseekueste_Admin {
 			'hierarchical'               => false,
 			'public'                     => true,
 			'show_ui'                    => true,
-			'show_admin_column'          => false,
-			'show_in_nav_menus'          => true,
-			'show_tagcloud'              => true,
+			'show_admin_column'          => true,
+			'show_in_nav_menus'          => false,
+			'show_tagcloud'              => true ,
 		);
 		register_taxonomy( 'projekttraeger', array( $key_cpt ), $args );
 
