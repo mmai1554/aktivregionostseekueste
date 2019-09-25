@@ -159,7 +159,7 @@ class Aktivregionostseekueste_Public {
 			), $params );
 			$title = $a['title'];
 			$cat   = $a['cat'];
-			$list = '';
+			$list  = '';
 
 			// go:
 			$render_template = function ( $title, $content ) {
@@ -169,7 +169,13 @@ class Aktivregionostseekueste_Public {
 						$content
 					);
 			};
-			$mi_li           = '<li><a href="%s" target="_self">%s (%s)</a></li>';
+			$mi_li           = function ( $url, $filename, $filesize, $class = '' ) {
+				if ( $class ) {
+					$class = ' class="' . $class . '"';
+				}
+
+				return '<li' . $class . '><a href="' . $url . '" target="_self">' . $filename . ' (' . $filesize . ')</a></li>';
+			};
 
 			$args = [
 				'post_type'   => 'attachment',
@@ -196,22 +202,21 @@ class Aktivregionostseekueste_Public {
 
 				while ( $query->have_posts() ) {
 					$query->the_post();
+					$fi = $query->post;
+					$fii = wp_basename(get_attached_file( $query->post->ID ));
+					$css_class = str_replace(['/', '.'], '-', $query->post->post_mime_type);
 					$url      = wp_get_attachment_url( $query->post->ID );
 					$filename = get_the_title();
 					$filesize = filesize( get_attached_file( $query->post->ID ) );
 					$filesize = size_format( $filesize, 2 );
-					$render   = sprintf(
-						$mi_li,
-						$url,
-						$filename,
-						$filesize
-					);
+					$render   =  $mi_li($url,$filename,$filesize, $css_class);
 					$html[]   = $render;
 				}
 				wp_reset_postdata();
 				$html[] = '</ul>';
 				$list   = implode( "\n", $html );
 			}
+
 			return $render_template( $title, $list );
 		} );
 
