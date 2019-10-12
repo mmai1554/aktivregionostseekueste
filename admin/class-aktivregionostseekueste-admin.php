@@ -159,6 +159,22 @@ class Aktivregionostseekueste_Admin {
 			'capability_type'     => 'page',
 		);
 		register_post_type( 'termin', $args );
+
+		// Admin Columns:
+		add_filter( 'manage_termin_posts_columns', function ( $columns ) {
+			return array_merge( $columns, array(
+				'termin_datum' => __( 'Termin' ),
+			) );
+		} );
+		add_action( 'manage_termin_posts_custom_column', function ( $column, $post_id ) {
+			switch ( $column ) {
+				case 'termin_datum':
+					echo get_field( 'termin_datum', $post_id, true );
+					break;
+			}
+		}, 10, 2 );
+
+
 	}
 
 	function register_cpt_projekttraeger() {
