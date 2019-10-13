@@ -106,7 +106,6 @@ class Aktivregionostseekueste_Admin {
 	function register_cpts() {
 		$this->register_aroprojekte();
 		$this->register_cpt_termine();
-		// $this->register_cpt_projekttraeger();
 	}
 
 
@@ -177,61 +176,7 @@ class Aktivregionostseekueste_Admin {
 
 	}
 
-	function register_cpt_projekttraeger() {
 
-		$labels = array(
-			'name'                  => _x( 'Projektträger', 'Post Type General Name', self::TEXT_DOMAIN ),
-			'singular_name'         => _x( 'Projektträger', 'Post Type Singular Name', self::TEXT_DOMAIN ),
-			'menu_name'             => __( 'Projektträger', self::TEXT_DOMAIN ),
-			'name_admin_bar'        => __( 'Projektträger', self::TEXT_DOMAIN ),
-			'archives'              => __( 'Projektträger-Archiv', self::TEXT_DOMAIN ),
-			'parent_item_colon'     => __( 'Parent Item:', self::TEXT_DOMAIN ),
-			'all_items'             => __( 'Projektträger', self::TEXT_DOMAIN ),
-			'add_new_item'          => __( 'Neuer Projektträger', self::TEXT_DOMAIN ),
-			'add_new'               => __( 'Neuen Projektträger hinzufügen', self::TEXT_DOMAIN ),
-			'new_item'              => __( 'Neuer Projektträger', self::TEXT_DOMAIN ),
-			'edit_item'             => __( 'Projektträger  bearbeiten', self::TEXT_DOMAIN ),
-			'update_item'           => __( 'Projektträger aktualisieren', self::TEXT_DOMAIN ),
-			'view_item'             => __( 'Projektträger anschauen', self::TEXT_DOMAIN ),
-			'search_items'          => __( 'Projektträger durchsuchen', self::TEXT_DOMAIN ),
-			'not_found'             => __( 'Projektträger nicht gefunden', self::TEXT_DOMAIN ),
-			'not_found_in_trash'    => __( 'Projektträger nicht im Papierkorb gefunden', self::TEXT_DOMAIN ),
-			'featured_image'        => __( 'Featured Image', self::TEXT_DOMAIN ),
-			'set_featured_image'    => __( 'Set featured image', self::TEXT_DOMAIN ),
-			'remove_featured_image' => __( 'Remove featured image', self::TEXT_DOMAIN ),
-			'use_featured_image'    => __( 'Use as featured image', self::TEXT_DOMAIN ),
-			'insert_into_item'      => __( 'Zu Projektträger anhängen', self::TEXT_DOMAIN ),
-			'uploaded_to_this_item' => __( 'Zu Projektträger hochgelanden', self::TEXT_DOMAIN ),
-			'items_list'            => __( 'Terlinliste', self::TEXT_DOMAIN ),
-			'items_list_navigation' => __( 'Termine list navigation', self::TEXT_DOMAIN ),
-			'filter_items_list'     => __( 'Filter Terminliste', self::TEXT_DOMAIN ),
-		);
-		$args   = [
-			'label'               => __( 'Projektträger', self::TEXT_DOMAIN ),
-			'description'         => __( 'Projektträger als Liste darstellen', self::TEXT_DOMAIN ),
-			'labels'              => $labels,
-			'supports'            => [ 'title', 'editor' ],
-			'taxonomies'          => [],
-			'hierarchical'        => false,
-			'public'              => true,
-			'show_ui'             => true,
-			'show_in_menu'        => 'edit.php?post_type=aroprojekte',
-			// 'menu_position'       => 6,
-			'show_in_admin_bar'   => true,
-			'show_in_nav_menus'   => true,
-			'can_export'          => true,
-			'has_archive'         => true,
-			'exclude_from_search' => false,
-			'publicly_queryable'  => true,
-			'capability_type'     => 'page',
-		];
-		register_post_type( 'projekttraeger', $args );
-//		add_action( 'admin_menu', function () {
-//			//add_submenu_page( 'edit.php?post_type=aroprojekte', 'Projektträger', 'Projektträger', 'manage_options', 'edit-tags.php?taxonomy=genre&post_type=aroprojekte' );
-//			add_submenu_page( 'edit.php?post_type=aroprojekte', 'Projektträger', 'Projektträger', 'manage_options');
-//		} );
-
-	}
 
 	function register_aroprojekte() {
 
