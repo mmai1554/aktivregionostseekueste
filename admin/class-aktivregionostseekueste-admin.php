@@ -138,7 +138,8 @@ class Aktivregionostseekueste_Admin {
 			'items_list_navigation' => __( 'Termine list navigation', self::TEXT_DOMAIN ),
 			'filter_items_list'     => __( 'Filter Terminliste', self::TEXT_DOMAIN ),
 		);
-		$args   = array(
+		// dashicons-calendar-alt
+		$args = array(
 			'label'               => __( 'Termine', self::TEXT_DOMAIN ),
 			'description'         => __( 'Termine als Liste darstellen', self::TEXT_DOMAIN ),
 			'labels'              => $labels,
@@ -149,6 +150,7 @@ class Aktivregionostseekueste_Admin {
 			'show_ui'             => true,
 			'show_in_menu'        => true,
 			'menu_position'       => 5,
+			'menu_icon'           => 'dashicons-calendar-alt',
 			'show_in_admin_bar'   => true,
 			'show_in_nav_menus'   => true,
 			'can_export'          => true,
@@ -175,7 +177,6 @@ class Aktivregionostseekueste_Admin {
 
 
 	}
-
 
 
 	function register_aroprojekte() {
@@ -315,63 +316,65 @@ class Aktivregionostseekueste_Admin {
 			'name'                       => _x( 'Projektträger', 'Taxonomy General Name', $text_domain ),
 			'singular_name'              => _x( 'Projektträger', 'Taxonomy Singular Name', $text_domain ),
 			'menu_name'                  => __( 'Projektträger', self::TEXT_DOMAIN ),
-			'all_items'                  => __( 'Alle Projektträger',$text_domain ),
-			'parent_item'                => __( 'Übergeordnet',$text_domain ),
-			'parent_item_colon'          => __( 'Übergeordnet:',$text_domain ),
-			'new_item_name'              => __( 'New Item Name',$text_domain ),
-			'add_new_item'               => __( 'Add New Item',$text_domain ),
-			'edit_item'                  => __( 'Bearbeiten',$text_domain ),
-			'update_item'                => __( 'Aktualisieren',$text_domain ),
-			'view_item'                  => __( 'Ansehen',$text_domain ),
-			'separate_items_with_commas' => __( 'Separate items with commas',$text_domain ),
-			'add_or_remove_items'        => __( 'Add or remove items',$text_domain ),
-			'choose_from_most_used'      => __( 'Choose from the most used',$text_domain ),
-			'popular_items'              => __( 'Popular Items',$text_domain ),
-			'search_items'               => __( 'Suchen',$text_domain ),
-			'not_found'                  => __( 'Not Found',$text_domain ),
-			'no_terms'                   => __( 'No items',$text_domain ),
-			'items_list'                 => __( 'Items list',$text_domain ),
-			'items_list_navigation'      => __( 'Items list navigation',$text_domain ),
+			'all_items'                  => __( 'Alle Projektträger', $text_domain ),
+			'parent_item'                => __( 'Übergeordnet', $text_domain ),
+			'parent_item_colon'          => __( 'Übergeordnet:', $text_domain ),
+			'new_item_name'              => __( 'New Item Name', $text_domain ),
+			'add_new_item'               => __( 'Add New Item', $text_domain ),
+			'edit_item'                  => __( 'Bearbeiten', $text_domain ),
+			'update_item'                => __( 'Aktualisieren', $text_domain ),
+			'view_item'                  => __( 'Ansehen', $text_domain ),
+			'separate_items_with_commas' => __( 'Separate items with commas', $text_domain ),
+			'add_or_remove_items'        => __( 'Add or remove items', $text_domain ),
+			'choose_from_most_used'      => __( 'Choose from the most used', $text_domain ),
+			'popular_items'              => __( 'Popular Items', $text_domain ),
+			'search_items'               => __( 'Suchen', $text_domain ),
+			'not_found'                  => __( 'Not Found', $text_domain ),
+			'no_terms'                   => __( 'No items', $text_domain ),
+			'items_list'                 => __( 'Items list', $text_domain ),
+			'items_list_navigation'      => __( 'Items list navigation', $text_domain ),
 		);
-		$args = array(
-			'labels'                     => $labels,
-			'hierarchical'               => false,
-			'public'                     => true,
-			'show_ui'                    => true,
-			'show_admin_column'          => true,
-			'show_in_nav_menus'          => false,
-			'show_tagcloud'              => true ,
+		$args   = array(
+			'labels'            => $labels,
+			'hierarchical'      => false,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => false,
+			'show_tagcloud'     => true,
 		);
 		register_taxonomy( 'projekttraeger', array( $key_cpt ), $args );
 
 		// custom vcolumn URL:
-		add_filter("manage_edit-projekttraeger_columns", 'theme_columns');
-		function theme_columns($theme_columns) {
+		add_filter( "manage_edit-projekttraeger_columns", 'theme_columns' );
+		function theme_columns( $theme_columns ) {
 			$new_columns = array(
-				'cb' => '<input type="checkbox" />',
-				'name' => __('Name'),
-				'url' => __('Url'),
-				'slug' => __('Slug'),
-				'posts' => __('Posts')
+				'cb'    => '<input type="checkbox" />',
+				'name'  => __( 'Name' ),
+				'url'   => __( 'Url' ),
+				'slug'  => __( 'Slug' ),
+				'posts' => __( 'Posts' )
 			);
+
 			return $new_columns;
 		}
-		add_filter("manage_projekttraeger_custom_column", 'manage_theme_columns', 10, 3);
 
-		function manage_theme_columns($out, $column_name, $theme_id) {
-			$tax = get_term($theme_id, 'projekttraeger');
-			switch ($column_name) {
+		add_filter( "manage_projekttraeger_custom_column", 'manage_theme_columns', 10, 3 );
+
+		function manage_theme_columns( $out, $column_name, $theme_id ) {
+			$tax = get_term( $theme_id, 'projekttraeger' );
+			switch ( $column_name ) {
 				case 'url':
 					// get header image url
-					$out = get_field('url', $tax);
+					$out = get_field( 'url', $tax );
 					break;
 
 				default:
 					break;
 			}
+
 			return $out;
 		}
-
 
 
 	}
