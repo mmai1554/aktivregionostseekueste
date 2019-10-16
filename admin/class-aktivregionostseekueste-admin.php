@@ -133,7 +133,7 @@ class Aktivregionostseekueste_Admin {
 			'remove_featured_image' => __( 'Remove featured image', self::TEXT_DOMAIN ),
 			'use_featured_image'    => __( 'Use as featured image', self::TEXT_DOMAIN ),
 			'insert_into_item'      => __( 'Zu Termin anhängen', self::TEXT_DOMAIN ),
-			'uploaded_to_this_item' => __( 'Zu Termin hochgelanden', self::TEXT_DOMAIN ),
+			'uploaded_to_this_item' => __( 'Zu Termin hochgeladen', self::TEXT_DOMAIN ),
 			'items_list'            => __( 'Terlinliste', self::TEXT_DOMAIN ),
 			'items_list_navigation' => __( 'Termine list navigation', self::TEXT_DOMAIN ),
 			'filter_items_list'     => __( 'Filter Terminliste', self::TEXT_DOMAIN ),
