@@ -35,7 +35,7 @@ class Aktivregionostseekueste {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Aktivregionostseekueste_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Aktivregionostseekueste_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -44,7 +44,7 @@ class Aktivregionostseekueste {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var      string $plugin_name The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
 
@@ -53,7 +53,7 @@ class Aktivregionostseekueste {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string $version The current version of the plugin.
 	 */
 	protected $version;
 
@@ -157,6 +157,7 @@ class Aktivregionostseekueste {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'init', $plugin_admin, 'register_cpts' );
+		$this->loader->add_action( 'init', $plugin_admin, 'modify_admin_columns' );
 		// $this->loader->add_action( 'init', $plugin_admin, 'register_cpt_termine' );
 
 	}
@@ -190,8 +191,8 @@ class Aktivregionostseekueste {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since     1.0.0
 	 * @return    string    The name of the plugin.
+	 * @since     1.0.0
 	 */
 	public function get_plugin_name() {
 		return $this->plugin_name;
@@ -200,8 +201,8 @@ class Aktivregionostseekueste {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0.0
 	 * @return    Aktivregionostseekueste_Loader    Orchestrates the hooks of the plugin.
+	 * @since     1.0.0
 	 */
 	public function get_loader() {
 		return $this->loader;
@@ -210,8 +211,8 @@ class Aktivregionostseekueste {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0.0
 	 * @return    string    The version number of the plugin.
+	 * @since     1.0.0
 	 */
 	public function get_version() {
 		return $this->version;

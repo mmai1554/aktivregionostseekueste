@@ -175,7 +175,50 @@ class Aktivregionostseekueste_Admin {
 			}
 		}, 10, 2 );
 
+	}
 
+
+	function modify_admin_columns() {
+		// Add Projektnummer to Column:
+
+		add_filter( 'manage_aroprojekte_posts_columns', function ( $columns ) {
+			return
+				[
+					'cb'                         => '<input type="checkbox" />',
+					'projektnr'                  => __( 'ProjektNr' ),
+					'title'                      => __( 'Titel' ),
+					'taxonomy-projektkategorien' => __( 'Projektkategorien' ),
+					'taxonomy-arbeitskreise'     => __( 'Arbeitskreise' ),
+					'taxonomy-projekttraeger'    => __( 'Projektträger' ),
+					'date'                       => __( 'Datum' )
+				];
+		} );
+
+		add_filter( "manage_aroprojekte_posts_custom_column", function ( $column, $post_id ) {
+			switch ( $column ) {
+				case 'projektnr':
+					echo get_field( 'projektnr', $post_id, true );
+					break;
+			}
+		}, 10, 3 );
+
+
+//		add_filter( "manage_projekttraeger_custom_column", 'manage_theme_columns', 10, 3 );
+//
+//		function manage_theme_columns( $out, $column_name, $theme_id ) {
+//			$tax = get_term( $theme_id, 'projekttraeger' );
+//			switch ( $column_name ) {
+//				case 'url':
+//					// get header image url
+//					$out = get_field( 'url', $tax );
+//					break;
+//
+//				default:
+//					break;
+//			}
+//
+//			return $out;
+//		}
 	}
 
 
