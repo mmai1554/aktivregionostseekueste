@@ -202,6 +202,25 @@ class Aktivregionostseekueste_Admin {
 			}
 		}, 10, 3 );
 
+		// Make it sortable:
+		// 1st: Column Title clickable:
+		add_filter( 'manage_edit-aroprojekte_sortable_columns', function ( $columns ) {
+			$columns['projektnr'] = 'projektnr';
+
+			return $columns;
+		} );
+		// 2nd: Hook into posts query:
+		add_action( 'pre_get_posts', function ( $query ) {
+			if ( ! is_admin() ) {
+				return;
+			}
+			$orderby = $query->get( 'orderby' );
+			if ( 'projektnr' == $orderby ) {
+				$query->set( 'meta_key', 'projektnr' );
+				$query->set( 'orderby', 'meta_value_num' );
+			}
+		} );
+
 
 //		add_filter( "manage_projekttraeger_custom_column", 'manage_theme_columns', 10, 3 );
 //
