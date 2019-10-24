@@ -209,9 +209,11 @@ class Aktivregionostseekueste_Admin {
 
 			return $columns;
 		} );
-		// 2nd: Hook into posts query:
+		// 2nd: Hook into posts query (use it for searching too:)
 		add_action( 'pre_get_posts', function ( $query ) {
-			if ( ! is_admin() ) {
+			$screen = get_current_screen();
+			$post_type = $post_type = $query->get('post_type');
+			if ( ! is_admin() || ( isset( $screen->post_type ) && 'aroprojekte' != $screen->post_type ) || 'aroprojekte' != $post_type ) {
 				return;
 			}
 			$orderby = $query->get( 'orderby' );
@@ -219,6 +221,9 @@ class Aktivregionostseekueste_Admin {
 				$query->set( 'meta_key', 'projektnr' );
 				$query->set( 'orderby', 'meta_value_num' );
 			}
+			$s = $query->get('s');
+
+
 		} );
 
 
