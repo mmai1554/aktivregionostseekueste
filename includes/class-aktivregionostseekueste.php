@@ -158,7 +158,7 @@ class Aktivregionostseekueste {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'init', $plugin_admin, 'register_cpts' );
 		$this->loader->add_action( 'init', $plugin_admin, 'modify_admin_columns' );
-		// $this->loader->add_action( 'init', $plugin_admin, 'register_cpt_termine' );
+		$this->loader->add_action( 'init', $this, 'my_acf_init' );
 
 	}
 
@@ -177,6 +177,10 @@ class Aktivregionostseekueste {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'init', $plugin_public, 'enqueue_scripts' );
 
+	}
+
+	public function my_acf_init() {
+		acf_update_setting( 'google_api_key', MI_GOOGLE_MAPS_API_KEY );
 	}
 
 	/**
