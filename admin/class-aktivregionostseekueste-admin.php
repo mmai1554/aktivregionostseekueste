@@ -42,6 +42,11 @@ class Aktivregionostseekueste_Admin {
 
 	const TEXT_DOMAIN = 'aktivregion';
 
+	const CPT_AKTIVREGION_PROJEKT = 'aroprojekte';
+	const TAX_PROJEKTKATEGORIE = 'projektkategorien';
+	const TAX_ARBEITSKREISE = 'arbeitskreise';
+	const TAX_PROJEKTTRAEGER = 'projekttraeger';
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -201,10 +206,10 @@ class Aktivregionostseekueste_Admin {
 					echo get_field( 'projektnr', $post_id, true );
 					break;
 				case 'location':
-					$a =  get_field( 'geolocation', $post_id, true );
-					if(count($a) > 0) {
-						$s = $a['lat'] . ' / ' .$a['lng'];
-						echo($s);
+					$a = get_field( 'geolocation', $post_id, true );
+					if ( count( $a ) > 0 ) {
+						$s = $a['lat'] . ' / ' . $a['lng'];
+						echo( $s );
 					}
 					break;
 			}
@@ -421,7 +426,7 @@ class Aktivregionostseekueste_Admin {
 			'show_in_nav_menus' => false,
 			'show_tagcloud'     => true,
 		);
-		register_taxonomy( 'projekttraeger', array( $key_cpt ), $args );
+		register_taxonomy( self::TAX_PROJEKTTRAEGER, array( $key_cpt ), $args );
 
 		// custom vcolumn URL:
 		add_filter( "manage_edit-projekttraeger_columns", 'theme_columns' );
