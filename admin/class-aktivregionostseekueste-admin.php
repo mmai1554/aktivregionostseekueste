@@ -190,7 +190,8 @@ class Aktivregionostseekueste_Admin {
 					'taxonomy-projektkategorien' => __( 'Projektkategorien' ),
 					'taxonomy-arbeitskreise'     => __( 'Arbeitskreise' ),
 					'taxonomy-projekttraeger'    => __( 'Projektträger' ),
-					'date'                       => __( 'Datum' )
+					'location'                   => __( 'Loc' ),
+					'date'                       => __( 'Datum' ),
 				];
 		} );
 
@@ -198,6 +199,13 @@ class Aktivregionostseekueste_Admin {
 			switch ( $column ) {
 				case 'projektnr':
 					echo get_field( 'projektnr', $post_id, true );
+					break;
+				case 'location':
+					$a =  get_field( 'geolocation', $post_id, true );
+					if(count($a) > 0) {
+						$s = $a['lat'] . ' / ' .$a['lng'];
+						echo($s);
+					}
 					break;
 			}
 		}, 10, 3 );
@@ -211,8 +219,8 @@ class Aktivregionostseekueste_Admin {
 		} );
 		// 2nd: Hook into posts query (use it for searching too:)
 		add_action( 'pre_get_posts', function ( $query ) {
-			$screen = get_current_screen();
-			$post_type = $post_type = $query->get('post_type');
+			$screen    = get_current_screen();
+			$post_type = $post_type = $query->get( 'post_type' );
 			if ( ! is_admin() || ( isset( $screen->post_type ) && 'aroprojekte' != $screen->post_type ) || 'aroprojekte' != $post_type ) {
 				return;
 			}
@@ -221,7 +229,7 @@ class Aktivregionostseekueste_Admin {
 				$query->set( 'meta_key', 'projektnr' );
 				$query->set( 'orderby', 'meta_value_num' );
 			}
-			$s = $query->get('s');
+			$s = $query->get( 's' );
 
 
 		} );
@@ -310,6 +318,9 @@ class Aktivregionostseekueste_Admin {
 			'capability_type'     => 'page',
 		);
 		register_post_type( $key_cpt, $args );
+
+		// Columns:
+
 
 		// Projektkategorie
 		$labels = array(
@@ -435,7 +446,6 @@ class Aktivregionostseekueste_Admin {
 					// get header image url
 					$out = get_field( 'url', $tax );
 					break;
-
 				default:
 					break;
 			}
@@ -444,6 +454,37 @@ class Aktivregionostseekueste_Admin {
 		}
 
 
+	}
+
+	protected function custom_aro_projekte_columns() {
+		add_filter( "manage_edit-projekttraeger_columns", 'theme_columns' );
+		function theme_columns( $theme_columns ) {
+			$new_columns = array(
+				'cb'    => '<input type="checkbox" />',
+				'name'  => __( 'Name' ),
+				'url'   => __( 'Url' ),
+				'slug'  => __( 'Slug' ),
+				'posts' => __( 'Posts' )
+			);
+
+			return $new_columns;
+		}
+
+		add_filter( "manage_projekttraeger_custom_column", 'manage_theme_columns', 10, 3 );
+
+		function manage_theme_columns( $out, $column_name, $theme_id ) {
+			$tax = get_term( $theme_id, 'projekttraeger' );
+			switch ( $column_name ) {
+				case 'url':
+					// get header image url
+					$out = get_field( 'url', $tax );
+					break;
+				default:
+					break;
+			}
+
+			return $out;
+		}
 	}
 
 }
