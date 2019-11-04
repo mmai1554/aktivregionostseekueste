@@ -91,9 +91,8 @@ class Aktivregionostseekueste_Public {
 
 		if ( is_page( self::PAGE_SHOW_MAP ) ) {
 			wp_enqueue_script( 'leafletjs', 'https://unpkg.com/leaflet@1.5.1/dist/leaflet.js', [], null, false );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/aktivregionostseekueste-public.js', [ 'jquery' ], $this->version, true );
 		}
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/aktivregionostseekueste-public.js', [ 'jquery' ], $this->version, true );
-
 	}
 
 	// Add Shortcode
