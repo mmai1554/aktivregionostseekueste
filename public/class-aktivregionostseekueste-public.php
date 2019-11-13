@@ -207,7 +207,7 @@ class Aktivregionostseekueste_Public {
 						$label .= $word[0];
 					}
 					$address = get_field( 'geolocation' );
-					if ( null !== $address && count( $address ) > 0 ) {
+					if ( isset($address['lat']) ) {
 						$arrMarker[] = $this->renderMarkerAsHTML( $post, $address['lat'], $address['lng'] );
 					}
 				}
