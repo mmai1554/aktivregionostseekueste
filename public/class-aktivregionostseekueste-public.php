@@ -10,6 +10,8 @@
  * @subpackage Aktivregionostseekueste/public
  */
 
+use mnc\RegisterShortcodes;
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -99,51 +101,8 @@ class Aktivregionostseekueste_Public {
 
 
 	public function register_shortcodes() {
-		// wraps the given URL of acf field url around content,
-		// usage: [mnc_field]my website
-		add_shortcode( 'mnc_url', function ( $atts, $content = null ) {
-			global $post;
-			// Attributes
-			$atts = shortcode_atts(
-				array(),
-				$atts,
-				'mnc_url'
-			);
-			$url  = get_field( 'url', $post );
-			if ( ! strlen( $url ) ) {
-				return '';
-			}
-			$o = '<a href="' . $url . '" target="_blank">';
-			if ( is_null( $content ) ) {
-				return $o . 'website' . '</a>';
-			}
-			// secure output by executing the_content filter hook on $content
-			$o .= apply_filters( 'the_content', $content );
-			// run shortcode parser recursively
-			$o .= do_shortcode( $content );
-
-			return $o . $content . '</a>';
-		} );
-		add_shortcode( 'mnc_projektkat_url', function ( $atts ) {
-			global $post;
-			// Attributes
-			$atts = shortcode_atts(
-				array(),
-				$atts,
-				'mnc_url'
-			);
-			// get Taxonomy:
-			$terms = get_terms( [
-				'taxonomy' => 'projektkategorie',
-			] );
-			if ( $terms instanceof WP_Error ) {
-				return '';
-			}
-			$projektkategorie = $terms[0];
-			$url              = get_field( 'url', $projektkategorie->term_id );
-
-			return $url;
-		} );
+		RegisterShortcodes::MncUrl();
+		RegisterShortcodes::MncTraegerList();
 		$this->register_shortcode_mnc_openstreetmap();
 
 	}

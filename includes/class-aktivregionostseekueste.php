@@ -104,6 +104,7 @@ class Aktivregionostseekueste {
 		 * core plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-aktivregionostseekueste-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/Maln.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
@@ -121,6 +122,8 @@ class Aktivregionostseekueste {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-aktivregionostseekueste-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/RegisterShortcodes.php';
+
 
 		$this->loader = new Aktivregionostseekueste_Loader();
 
