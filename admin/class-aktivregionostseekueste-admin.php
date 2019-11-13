@@ -461,35 +461,4 @@ class Aktivregionostseekueste_Admin {
 
 	}
 
-	protected function custom_aro_projekte_columns() {
-		add_filter( "manage_edit-projekttraeger_columns", 'theme_columns' );
-		function theme_columns( $theme_columns ) {
-			$new_columns = array(
-				'cb'    => '<input type="checkbox" />',
-				'name'  => __( 'Name' ),
-				'url'   => __( 'Url' ),
-				'slug'  => __( 'Slug' ),
-				'posts' => __( 'Posts' )
-			);
-
-			return $new_columns;
-		}
-
-		add_filter( "manage_projekttraeger_custom_column", 'manage_theme_columns', 10, 3 );
-
-		function manage_theme_columns( $out, $column_name, $theme_id ) {
-			$tax = get_term( $theme_id, 'projekttraeger' );
-			switch ( $column_name ) {
-				case 'url':
-					// get header image url
-					$out = get_field( 'url', $tax );
-					break;
-				default:
-					break;
-			}
-
-			return $out;
-		}
-	}
-
 }
