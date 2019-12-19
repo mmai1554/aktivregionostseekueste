@@ -112,7 +112,7 @@ class Aktivregionostseekueste_Public {
 			return $left . ' ' . $right . '<br>';
 		};
 		$terms       = get_the_terms( $post->ID, Aktivregionostseekueste_Admin::TAX_PROJEKTTRAEGER );
-		$kategorien       = get_the_terms( $post->ID, Aktivregionostseekueste_Admin::TAX_PROJEKTKATEGORIE );
+		$kategorien  = get_the_terms( $post->ID, Aktivregionostseekueste_Admin::TAX_PROJEKTKATEGORIE );
 		$bezeichnung = $post->post_title;
 		$url         = get_the_permalink( $post );
 		$projektnr   = get_field( 'projektnr', $post );
@@ -122,7 +122,7 @@ class Aktivregionostseekueste_Public {
 		$html        = '<div class="marker" data-lat="' . $lat . '" data-lng="' . $lng . '" data-label="' . $bezeichnung . '">';
 		$html        .= '<a href="' . $url . '"><p><strong><span>' . $projektnr . '</span> ' . $bezeichnung . '</strong></p></a>';
 		$html        .= '<div>';
-		if ( is_array( $kategorien) && count( $kategorien ) > 0 ) {
+		if ( is_array( $kategorien ) && count( $kategorien ) > 0 ) {
 			foreach ( $kategorien as $kat ) {
 				$html .= $aline( 'Kategorie:', $kat->name );
 			}
@@ -132,8 +132,8 @@ class Aktivregionostseekueste_Public {
 				$html .= $aline( 'Träger:', $term->name );
 			}
 		}
-		$html        .= $aline( 'Fördersumme:', $summe );
-		$html        .= $aline( 'Zeitraum:', $zeitraum );
+		$html .= $aline( 'Fördersumme:', $summe );
+		$html .= $aline( 'Zeitraum:', $zeitraum );
 		$html .= '</div>';
 		$html .= '</div>';
 
@@ -172,7 +172,7 @@ class Aktivregionostseekueste_Public {
 						$label .= $word[0];
 					}
 					$address = get_field( 'geolocation' );
-					if ( isset($address['lat']) ) {
+					if ( isset( $address['lat'] ) ) {
 						$arrMarker[] = $this->renderMarkerAsHTML( $post, $address['lat'], $address['lng'] );
 					}
 				}
