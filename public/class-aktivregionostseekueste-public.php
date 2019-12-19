@@ -112,6 +112,7 @@ class Aktivregionostseekueste_Public {
 			return $left . ' ' . $right . '<br>';
 		};
 		$terms       = get_the_terms( $post->ID, Aktivregionostseekueste_Admin::TAX_PROJEKTTRAEGER );
+		$kategorien       = get_the_terms( $post->ID, Aktivregionostseekueste_Admin::TAX_PROJEKTKATEGORIE );
 		$bezeichnung = $post->post_title;
 		$url         = get_the_permalink( $post );
 		$projektnr   = get_field( 'projektnr', $post );
@@ -121,6 +122,11 @@ class Aktivregionostseekueste_Public {
 		$html        = '<div class="marker" data-lat="' . $lat . '" data-lng="' . $lng . '" data-label="' . $bezeichnung . '">';
 		$html        .= '<a href="' . $url . '"><p><strong><span>' . $projektnr . '</span> ' . $bezeichnung . '</strong></p></a>';
 		$html        .= '<div>';
+		if ( is_array( $kategorien) && count( $kategorien ) > 0 ) {
+			foreach ( $kategorien as $kat ) {
+				$html .= $aline( 'Kategorie:', $kat->name );
+			}
+		}
 		if ( is_array( $terms ) && count( $terms ) > 0 ) {
 			foreach ( $terms as $term ) {
 				$html .= $aline( 'Träger:', $term->name );
