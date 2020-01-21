@@ -3,6 +3,7 @@
 namespace mnc;
 
 use WP_Error;
+use WP_Query;
 
 final class RegisterShortcodes {
 
@@ -95,6 +96,58 @@ final class RegisterShortcodes {
 				}
 			}
 			return implode("<br>", $list);
+		} );
+	}
+
+	public static function MncGetTermine() {
+		add_shortcode( 'mnc_aktuelle_termine', function () {
+			$date_now = date( 'Y-m-d H:i:s' );
+			$args  = array(
+				'posts_per_page' => - 1,
+				'post_type'      => 'termin',
+				'meta_query'     => array(
+					'relation' => 'AND',
+					array(
+						'key'     => 'termin_datum',
+						'compare' => '>=',
+						'value'   => $date_now,
+						'type'    => 'DATETIME'
+					),
+//			array(
+//				'key'     => 'end_date',
+//				'compare' => '>=',
+//				'value'   => $date_now,
+//				'type'    => 'DATETIME'
+//			)
+				),
+				'order'          => 'ASC',
+				'orderby'        => 'meta_value',
+				'meta_key'       => 'termin_datum',
+				'meta_type'      => 'DATE'
+			);
+			$query = new WP_Query( $args );
+
+			if ( $query->have_posts() ) {
+
+				$html = [];
+				while ( $query->have_posts() ) {
+					$query->the_post();
+					$html[] = '<div class="mnc_termin">';
+					$html[] = '<h4>' . get_field( 'termin_datum' ) .  ' <a href="' . get_the_permalink() . '">' . get_the_title() . '</a></h4>';
+					$html[] = '<p>' . get_the_excerpt() . '</p>';
+					$text   = get_the_content();
+					if ( strlen( $text ) ) {
+						$html[] = '<p><a href="' . get_the_permalink() . '">Details...</a></p>';
+					}
+					$html[] = '</div>';
+				}
+			} else {
+				return '<div class="mnc_termin"><p>keine Aktuellen Termine vorhanden.</p></div>';
+			}
+			wp_reset_postdata();
+
+			return implode( "\n", $html );
+
 		} );
 	}
 

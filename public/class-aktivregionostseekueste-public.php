@@ -103,6 +103,7 @@ class Aktivregionostseekueste_Public {
 	public function register_shortcodes() {
 		RegisterShortcodes::MncUrl();
 		RegisterShortcodes::MncTraegerList();
+		RegisterShortcodes::MncGetTermine();
 		$this->register_shortcode_mnc_openstreetmap();
 
 	}
