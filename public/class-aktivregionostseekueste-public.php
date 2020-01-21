@@ -142,19 +142,32 @@ class Aktivregionostseekueste_Public {
 
 	protected function register_shortcode_mnc_openstreetmap() {
 		add_shortcode( 'mnc_openstreetmap', function ( $atts ) {
+
 			global $post;
-			$args         = [
+			$atts = array_change_key_case( (array) $atts, CASE_LOWER );
+			// override default attributes with user attributes
+			$atts = shortcode_atts( [
+				'kat' => false,
+			], $atts );
+
+
+			$args = [
 				'numberposts'    => - 1,
 				'post_type'      => Aktivregionostseekueste_Admin::CPT_AKTIVREGION_PROJEKT,
-				'tax_query'      => [
-					[
-						'taxonomy' => Aktivregionostseekueste_Admin::TAX_PROJEKTKATEGORIE,
-						'field'    => 'slug',
-						'terms'    => 'abgeschlossene-projekte-2015-2023',
-					]
-				],
 				'posts_per_page' => - 1,
 			];
+			// Filter project categories if set:
+			if(false !== $atts['kat']) {
+				$tag_ids = explode(',', $atts['kat']);
+				$args['tax_query'] = [
+					[
+						'taxonomy' => Aktivregionostseekueste_Admin::TAX_PROJEKTKATEGORIE,
+						'field'    => 'term_id',
+						'terms'    => $tag_ids,
+					]
+				];
+			}
+
 			$objQuery     = new WP_Query( $args );
 			$draw_element = function ( $inner_html ) {
 				return '<div id="markers">' . $inner_html . '</div>';
