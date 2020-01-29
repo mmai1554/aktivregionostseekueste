@@ -121,7 +121,7 @@ class Aktivregionostseekueste_Public {
 		$summe       = get_field( 'fordersumme', $post );
 		$zeitraum    = get_field( 'umsetzungszeitraum', $post );
 		$html        = '<div class="marker" data-lat="' . $lat . '" data-lng="' . $lng . '" data-label="' . $bezeichnung . '">';
-		$html        .= '<a href="' . $url . '"><p><strong><span>' . $projektnr . '</span> ' . $bezeichnung . '</strong></p></a>';
+		$html        .= '<a target="_blank" href="' . $url . '"><p><strong><span>' . $projektnr . '</span> ' . $bezeichnung . '</strong></p></a>';
 		$html        .= '<div>';
 		if ( is_array( $kategorien ) && count( $kategorien ) > 0 ) {
 			foreach ( $kategorien as $kat ) {
